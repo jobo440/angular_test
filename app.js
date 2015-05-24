@@ -1,17 +1,14 @@
 var myApp = angular.module('myApp', []);
 
-myApp.controller('mainController', function(){
+myApp.controller('mainController', ['$scope', '$timeout', function($scope, $timeout){
   
-});
+  $scope.name = 'Tony';
+  
+  $timeout(function(){
+    
+    $scope.name = 'Everybody'
+    
+  }, 3000)
+  
+}]);
 
-
-var Person = function(firstname, lastname){
-
-  this.firstname = firstname;
-  this.lastname = lastname;
-
-}
-
-var john = new Person('John', 'Doe');
-
-console.log(john);
