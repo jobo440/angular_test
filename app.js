@@ -1,40 +1,54 @@
-var myApp = angular.module('myApp', []);
+var myApp = angular.module('myApp', ['ngRoute']);
 
-myApp.controller('mainController', ['$scope', '$filter', '$http', function($scope, $filter, $http){
-  
-  $scope.handle = '';
-  
-  $scope.lowercasehandle = function() {
-    return $filter('lowercase')($scope.handle);
-  };
-  
-  $scope.characters = 5;
-  
-  $scope.$watch('handle', function(newValue,oldValue){
-    console.info('Changed!');
-    console.log('Old:' + oldValue);
-    console.log('New:' + newValue);
+myApp.config(function($routeProvider) {
+
+  $routeProvider
+    .when('/', {
+    templateUrl: 'pages/main.html',
+    controller: 'mainController'
+  })
+
+    .when('/second', {
+    templateUrl: 'pages/second.html',
+    controller: 'secondController'
   })
   
-  $scope.rules = [
-    { rulename: "must be 5 characters" },
-    { rulename: "must not be used elsewhere" },
-    { rulename: "must be cool" }
-  ];
+})
+
+
+myApp.controller('mainController', ['$scope', '$log', function($scope, $log){
   
-    $scope.alertClick = function(){
-    alert("Clicked");
-  }
+  $scope.word = 'hi'
   
-    
-    $scope.name = 'Joe'
-  
-    $http.get('/api')
-      .success(function(result) {
-    
-    })
-      .error(function (data, status) {
-      
-    })
 }]);
 
+myApp.controller('secondController', ['$scope', '$log', '$interval', function($scope, $log, $interval){
+    
+  function randomCharacterAnimation(characterAmount, endCharacter, timeWait) {
+    
+    // create setupCharacters array   
+    setupCharacters = []  
+    for (i=0; i<characterAmount; i++) {  
+      randomCharacters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's']
+      var randomCharacter = randomCharacters[Math.floor(Math.random() * randomCharacters.length)];
+      setupCharacters.push(randomCharacter);
+    }; 
+    setupCharacters.push(endCharacter); 
+    console.log(setupCharacters);
+    // animation
+    //listOne = ['a','b','c','d','e','f','j'];
+    $scope.letterJ = randomCharacter
+    var i = 0;
+    $interval(function(){
+      if (setupCharacters[i-1] != endCharacter){
+        $scope.letterJ = setupCharacters[i++]
+      };
+      $scope.$apply();
+    }, timeWait) 
+
+    
+  };
+  randomCharacterAnimation(6, 'j', 100);
+
+
+}]);

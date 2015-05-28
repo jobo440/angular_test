@@ -1,0 +1,35 @@
+myApp.controller('secondController', ['$scope', '$log', '$interval', function($scope, $log, $interval){
+  
+
+  listOne = ['a','b','c','d','e','f','j'];
+  $scope.lettersJ = '0'
+  var i = 0;
+  $interval(function(){
+    if (listOne[i-1] != 'j'){
+      $scope.lettersJ = listOne[i++]
+    };
+    $scope.$apply();
+  }, 500) 
+  
+  listTwo = ['a','b','c','d','e','f','o'];
+  $scope.lettersO = '0'
+  var j = 0;
+  $interval(function(){
+    if (listTwo[j-1] != 'o'){
+      $scope.lettersO = listTwo[j++]
+    };
+    $scope.$apply();
+  }, 500) 
+  
+  listThree = ['a','b','c','d','e','f','e'];
+  $scope.lettersE = '0'
+  var k = 0;
+  $interval(function(){
+    if (listThree[k-1] != 'e'){
+      $scope.lettersE = listThree[k++]
+    };
+    $scope.$apply();
+  }, 500)
+  
+
+}]);
